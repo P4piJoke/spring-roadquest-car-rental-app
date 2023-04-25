@@ -1,0 +1,36 @@
+body {
+    background-color: #f3f3f3;
+}
+
+.home {
+    color: #e53424;
+}
+
+.logo-img{
+    vertical-align: middle;
+    height: 7vh;
+}
+
+.btn-primary {
+    color: #f3f3f3;
+    background-color: #e74f41;
+    border-color: #e53424;
+}
+
+.btn-primary:hover {
+    color: #f3f3f3;
+    background-color: #e53424;
+    border-color: #e53424;
+}
+
+.btn-outline-primary {
+    color: #f3f3f3;
+    border-color: #e53424;
+    background-color: #eb857c;
+}
+
+.btn-outline-primary:hover {
+    color: #f3f3f3;
+    border-color: #e53424;
+    background-color: #e53424;
+}
