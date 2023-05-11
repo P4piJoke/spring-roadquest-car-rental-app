@@ -1,23 +1,16 @@
 package com.p4pijk.roadquest.security;
 
+import com.p4pijk.roadquest.security.handler.RoleAuthenticationSuccessHandler;
 import com.p4pijk.roadquest.service.impl.UserDetailsServiceImpl;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.JdbcUserDetailsManager;
-import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
-
-import javax.sql.DataSource;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 @Configuration
 @RequiredArgsConstructor
@@ -50,11 +43,12 @@ public class UserSecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
         http.formLogin()
                 .loginPage("/login")
-                .defaultSuccessUrl("/",true)
+                .successHandler(authenticationSuccessHandler())
+//                .defaultSuccessUrl("/",true)
                 .failureForwardUrl("/login?error=true")
                 .permitAll()
                 .and()
-                .logout(logout->logout.logoutSuccessUrl("/login").permitAll());
+                .logout(logout->logout.logoutSuccessUrl("/").permitAll());
 
         http.authorizeHttpRequests(configurer ->
                 configurer
@@ -66,5 +60,10 @@ public class UserSecurityConfig {
         http.httpBasic();
         http.csrf().disable();
         return http.build();
+    }
+
+    @Bean
+    public AuthenticationSuccessHandler authenticationSuccessHandler(){
+        return new RoleAuthenticationSuccessHandler();
     }
 }
