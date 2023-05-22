@@ -1,10 +1,9 @@
 package com.p4pijk.roadquest.controller.user;
 
-import com.p4pijk.roadquest.entity.Role;
-import com.p4pijk.roadquest.entity.User;
+import com.p4pijk.roadquest.entity.user.Role;
+import com.p4pijk.roadquest.entity.user.User;
 import com.p4pijk.roadquest.model.UserSignUpModel;
 import com.p4pijk.roadquest.repository.UserRepository;
-import com.p4pijk.roadquest.service.impl.UserRQServiceImpl;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -47,7 +46,7 @@ public class SignUpController {
                         .firstName(userModel.getFirstName())
                         .lastName(userModel.getLastName())
                         .phoneNumber(userModel.getPhoneNumber())
-                        .role(new Role(4,"BASIC"))
+                        .role(new Role(3,"BASIC"))
                         .status(true)
                         .build()
         );

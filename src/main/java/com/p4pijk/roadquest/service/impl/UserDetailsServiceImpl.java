@@ -1,8 +1,8 @@
 package com.p4pijk.roadquest.service.impl;
 
-import com.p4pijk.roadquest.entity.User;
+import com.p4pijk.roadquest.entity.user.User;
 import com.p4pijk.roadquest.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,14 +16,10 @@ import java.util.List;
 import java.util.Set;
 
 @Service
+@RequiredArgsConstructor
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     private final UserRepository repository;
-
-    @Autowired
-    public UserDetailsServiceImpl(UserRepository repository) {
-        this.repository = repository;
-    }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
