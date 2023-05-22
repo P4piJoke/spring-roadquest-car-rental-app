@@ -1,23 +1,20 @@
 package com.p4pijk.roadquest.service.impl;
 
-import com.p4pijk.roadquest.entity.User;
+import com.p4pijk.roadquest.entity.user.Role;
+import com.p4pijk.roadquest.entity.user.User;
 import com.p4pijk.roadquest.repository.UserRepository;
 import com.p4pijk.roadquest.service.UserRQService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class UserRQServiceImpl implements UserRQService {
 
-    private UserRepository repository;
-
-    @Autowired
-    public UserRQServiceImpl(UserRepository repository) {
-        this.repository = repository;
-    }
+    private final UserRepository repository;
 
     @Override
     public List<User> findAll() {
@@ -47,5 +44,10 @@ public class UserRQServiceImpl implements UserRQService {
     @Override
     public void deleteById(int id) {
         repository.deleteById(id);
+    }
+
+    @Override
+    public List<User> findByRole(Role role) {
+        return repository.findByRole(role);
     }
 }

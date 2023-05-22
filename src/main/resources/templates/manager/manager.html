@@ -1,11 +1,27 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" >
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
-    <title>Profile</title>
+    <title>Manager panel</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css" type="text/css">
 </head>
 <body>
-<div>
+<div class="container">
+    <header class="d-flex flex-wrap align-items-center
+    justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
+        <div class="col-md-3 mb-2 mb-md-0">
+            <a th:href="@{/}" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+                <img src="img/logo.svg" class="logo-img" alt="roadquest" >
+            </a>
+        </div>
+        <div class="col-md-3 text-end">
+            <a sec:authorize="isAuthenticated()" th:href="@{/logout}" class="btn btn-primary">
+                Logout
+            </a>
+        </div>
+    </header>
     <h1>I'm Manager</h1>
 </div>
 
