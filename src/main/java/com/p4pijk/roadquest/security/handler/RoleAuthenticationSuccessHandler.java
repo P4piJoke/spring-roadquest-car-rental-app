@@ -1,6 +1,5 @@
 package com.p4pijk.roadquest.security.handler;
 
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -19,7 +18,7 @@ import java.util.Map;
 public class RoleAuthenticationSuccessHandler
         implements AuthenticationSuccessHandler {
 
-    private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
+    private final RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request,
@@ -27,7 +26,7 @@ public class RoleAuthenticationSuccessHandler
                                         Authentication authentication)
             throws IOException {
 
-        handle(request,response,authentication);
+        handle(request, response, authentication);
         clearAuthenticationAttributes(request);
     }
 
@@ -50,14 +49,13 @@ public class RoleAuthenticationSuccessHandler
 
         Map<String, String> roleTargetUrlMap = new HashMap<>();
         roleTargetUrlMap.put("BASIC", "/");
-        roleTargetUrlMap.put("VENDOR", "/");
         roleTargetUrlMap.put("MANAGER", "/manager");
         roleTargetUrlMap.put("ADMIN", "/admin");
 
         final Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
         for (final GrantedAuthority grantedAuthority : authorities) {
             String authorityName = grantedAuthority.getAuthority();
-            if(roleTargetUrlMap.containsKey(authorityName)) {
+            if (roleTargetUrlMap.containsKey(authorityName)) {
                 return roleTargetUrlMap.get(authorityName);
             }
         }

@@ -12,20 +12,21 @@
     <header class="d-flex flex-wrap align-items-center
     justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
         <div class="col-md-3 mb-2 mb-md-0">
-            <a th:href="@{/}" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
-                <img src="img/logo.svg" class="logo-img" alt="roadquest" >
+            <a th:href="@{/}"
+               class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+                <img src="img/logo.svg" class="logo-img" alt="roadquest">
             </a>
         </div>
         <div>
             <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
                 <li>
-                    <a href="#" class="nav-link px-2 link-secondary">Home</a>
+                    <a th:href="@{/}" class="nav-link px-2 link-secondary">Home</a>
                 </li>
                 <li>
-                    <a href="#" class="nav-link px-2 link-secondary">Rent a car</a>
+                    <a th:href="@{/rent}" class="nav-link px-2 link-secondary">Rent a car</a>
                 </li>
                 <li>
-                    <a href="#" class="nav-link px-2 link-secondary">About</a>
+                    <a th:href="@{/about}" class="nav-link px-2 link-secondary">About</a>
                 </li>
             </ul>
         </div>
@@ -49,5 +50,15 @@
 <h1 sec:authorize="hasAuthority('ADMIN')">I'm ADMIN</h1>
 <h1 sec:authorize="hasAuthority('BASIC')">I'm BASIC</h1>
 <h1 sec:authorize="hasAuthority('MANAGER')">I'm MANAGER</h1>
+<!-- Some data about company -->
+<footer class="footer fixed-bottom bg-dark text-white">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col text-center">
+                <p>&copy; 2023 Ваша компанія. Усі права захищено.</p>
+            </div>
+        </div>
+    </div>
+</footer>
 </body>
 </html>

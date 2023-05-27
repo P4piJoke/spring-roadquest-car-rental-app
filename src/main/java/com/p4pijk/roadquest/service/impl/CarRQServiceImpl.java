@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -16,21 +17,29 @@ public class CarRQServiceImpl implements CarRQService {
 
     @Override
     public List<Car> findAll() {
-        return null;
+        return repository.findAll();
     }
 
     @Override
     public Car findById(int id) {
-        return null;
+        Optional<Car> byId = repository.findById(id);
+        Car car;
+        if (byId.isPresent()){
+            car = byId.get();
+        }
+        else {
+            throw new RuntimeException("Can't find car by id - " + id);
+        }
+        return car;
     }
 
     @Override
     public Car save(Car newObj) {
-        return null;
+        return repository.save(newObj);
     }
 
     @Override
     public void deleteById(int id) {
-
+        repository.deleteById(id);
     }
 }

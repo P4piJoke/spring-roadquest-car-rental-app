@@ -11,6 +11,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 @RequiredArgsConstructor
@@ -18,7 +20,7 @@ public class UserSecurityConfig {
 
     private final UserDetailsServiceImpl service;
 
-    private static final String [] WHITE_LIST = {
+    private static final String[] WHITE_LIST = {
             "/css/**",
             "/img/**",
             "/signup",
@@ -26,13 +28,18 @@ public class UserSecurityConfig {
             "index.html"
     };
 
+    private static final String[] ADMIN_LIST = {
+            "/admin",
+            "/admin/addCar"
+    };
+
     @Bean
-    public PasswordEncoder encoder(){
+    public PasswordEncoder encoder() {
         return new BCryptPasswordEncoder();
     }
 
     @Bean
-    public DaoAuthenticationProvider authenticationProvider(){
+    public DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
         daoAuthenticationProvider.setPasswordEncoder(encoder());
         daoAuthenticationProvider.setUserDetailsService(service);
@@ -40,30 +47,41 @@ public class UserSecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.formLogin()
                 .loginPage("/login")
                 .successHandler(authenticationSuccessHandler())
-//                .defaultSuccessUrl("/",true)
                 .failureForwardUrl("/login?error=true")
                 .permitAll()
                 .and()
-                .logout(logout->logout.logoutSuccessUrl("/").permitAll());
+                .logout(logout -> logout.logoutSuccessUrl("/").permitAll());
 
         http.authorizeHttpRequests(configurer ->
                 configurer
                         .requestMatchers("/manager").hasAuthority("MANAGER")
-                        .requestMatchers("/admin").hasAuthority("ADMIN")
+                        .requestMatchers(ADMIN_LIST).hasAuthority("ADMIN")
                         .requestMatchers(WHITE_LIST).permitAll()
                         .anyRequest().authenticated()
-                );
+        );
         http.httpBasic();
         http.csrf().disable();
         return http.build();
     }
 
     @Bean
-    public AuthenticationSuccessHandler authenticationSuccessHandler(){
+    public AuthenticationSuccessHandler authenticationSuccessHandler() {
         return new RoleAuthenticationSuccessHandler();
+    }
+
+    @Bean
+    public WebMvcConfigurer webMvcConfigurer() {
+        return new WebMvcConfigurer() {
+            @Override
+            public void addResourceHandlers(ResourceHandlerRegistry registry) {
+                registry
+                        .addResourceHandler("/admin/**", "/manager/**")
+                        .addResourceLocations("classpath:/static/");
+            }
+        };
     }
 }
