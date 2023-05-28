@@ -17,6 +17,7 @@
         </div>
     </header>
 </div>
+<h2 class="text-center">Sign in to RoadQuest</h2>
 <div class="d-flex align-items-center justify-content-center vh-70">
     <form th:action="@{/login}" method="post">
         <div class="form-outline mb-4">
@@ -32,7 +33,11 @@
             <button type="submit" class="btn btn-primary btn-block mb-4">Sign in</button>
         </div>
         <div class="text-center">
-            <a th:href="@{/signup}">Sign Up</a>
+            <p>
+                New to RoadQuest?
+                <a th:href="@{/signup}" class="signup-button">Sign Up</a>
+            </p>
+<!--            <a th:href="@{/signup}" class="btn btn-link">Sign Up</a>-->
         </div>
     </form>
 </div>

@@ -25,6 +25,7 @@ public class UserSecurityConfig {
             "/img/**",
             "/signup",
             "/",
+            "/about",
             "index.html"
     };
 

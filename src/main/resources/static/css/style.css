@@ -34,3 +34,25 @@ body {
     border-color: #e53424;
     background-color: #e53424;
 }
+
+.btn-link {
+    font-weight: 600;
+    color: #e74f41;
+    text-decoration: none;
+}
+
+.btn-link:hover {
+    color: black;
+    text-decoration: none;
+}
+
+.signup-button{
+    font-weight: 600;
+    color: #e74f41;
+    text-decoration: none;
+}
+
+.signup-button:hover{
+    color: black;
+    text-decoration: none;
+}

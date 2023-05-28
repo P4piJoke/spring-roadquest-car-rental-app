@@ -2,7 +2,7 @@ package com.p4pijk.roadquest.controller.user;
 
 import com.p4pijk.roadquest.entity.user.Role;
 import com.p4pijk.roadquest.entity.user.User;
-import com.p4pijk.roadquest.model.UserSignUpModel;
+import com.p4pijk.roadquest.model.UserModel;
 import com.p4pijk.roadquest.service.impl.UserRQServiceImpl;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -22,13 +22,13 @@ public class SignUpController {
     private final PasswordEncoder encoder;
 
     @GetMapping("/signup")
-    public String createNewUser(UserSignUpModel userModel, Model model) {
+    public String createNewUser(UserModel userModel, Model model) {
         model.addAttribute("userModel", userModel);
         return "user/signup";
     }
 
     @PostMapping("/signup")
-    public String createNewUser(@Valid @ModelAttribute("userModel") UserSignUpModel userModel,
+    public String createNewUser(@Valid @ModelAttribute("userModel") UserModel userModel,
                                 BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "user/signup";

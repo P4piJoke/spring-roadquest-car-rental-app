@@ -14,7 +14,10 @@ public enum RQLiterals {
 
 
 //    USER PAGE
-    REDIRECT_USER("redirect:/profile");
+    REDIRECT_USER("redirect:/profile"),
+    USER_PROFILE("user/profile"),
+    RENT_PAGE("user/rent-page"),
+    ABOUT_PAGE("user/rent-page");
 
 
     private final String value;

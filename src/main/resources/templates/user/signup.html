@@ -17,6 +17,7 @@
         </div>
     </header>
 </div>
+<h2 class="text-center">Let's travel together</h2>
 <div class="d-flex align-items-center justify-content-center">
     <form action="#" th:action="@{/signup}" th:object="${userModel}" method="post">
         <div class="form-group">
@@ -58,6 +59,14 @@
 
         <div class="text-center">
             <button class="btn btn-primary btn-block mb-4 mt-4" type="submit">Sign up</button>
+        </div>
+        <div class="text-center">
+            <p>
+                Already have an account?
+                <a th:href="@{/login}" class="signup-button">Sign in</a>
+            </p>
+<!--            Already have an account?-->
+<!--            <a th:href="@{/login}" class="btn btn-link">Sign in</a>-->
         </div>
     </form>
 </div>

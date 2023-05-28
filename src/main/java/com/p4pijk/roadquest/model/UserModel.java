@@ -8,7 +8,7 @@ import lombok.RequiredArgsConstructor;
 
 @Data
 @RequiredArgsConstructor
-public class UserSignUpModel {
+public class UserModel {
 
     @NotBlank(message = "Login is required")
     @Size(min = 6, max = 32)

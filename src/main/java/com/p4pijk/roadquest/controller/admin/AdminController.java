@@ -4,7 +4,7 @@ import com.p4pijk.roadquest.entity.car.Car;
 import com.p4pijk.roadquest.entity.user.Role;
 import com.p4pijk.roadquest.entity.user.User;
 import com.p4pijk.roadquest.model.CarModel;
-import com.p4pijk.roadquest.model.UserSignUpModel;
+import com.p4pijk.roadquest.model.UserModel;
 import com.p4pijk.roadquest.service.impl.CarRQServiceImpl;
 import com.p4pijk.roadquest.service.impl.CarTypeRQServiceImpl;
 import com.p4pijk.roadquest.service.impl.UserRQServiceImpl;
@@ -100,7 +100,7 @@ public class AdminController {
     }
 
     @PostMapping("/saveManager")
-    public String saveManager(@Valid @ModelAttribute("manager") UserSignUpModel managerModel,
+    public String saveManager(@Valid @ModelAttribute("manager") UserModel managerModel,
                               BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             return RQLiterals.CREATE_MANAGER_PAGE.value();

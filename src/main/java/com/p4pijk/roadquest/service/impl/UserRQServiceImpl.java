@@ -25,12 +25,11 @@ public class UserRQServiceImpl implements UserRQService {
     public User findById(int id) {
 
         Optional<User> userById = repository.findById(id);
-        User user = null;
+        User user;
 
-        if (userById.isPresent()){
+        if (userById.isPresent()) {
             user = userById.get();
-        }
-        else {
+        } else {
             throw new RuntimeException("Can't find user by id - " + id);
         }
         return user;
@@ -46,8 +45,34 @@ public class UserRQServiceImpl implements UserRQService {
         repository.deleteById(id);
     }
 
+
+    @Override
+    public User findActiveByLogin(String login) {
+        User user;
+        Optional<User> byLoginAndStatus = repository.findByLoginAndStatus(login, true);
+        if (byLoginAndStatus.isPresent()){
+            user = byLoginAndStatus.get();
+        }
+        else {
+            throw new RuntimeException("Can't find active user by login - " + login);
+        }
+        return user;
+    }
+
     @Override
     public List<User> findByRole(Role role) {
         return repository.findByRole(role);
+    }
+
+    @Override
+    public User findByLogin(String login) {
+        User user;
+        Optional<User> byLogin = repository.findByLogin(login);
+        if (byLogin.isPresent()) {
+            user = byLogin.get();
+        } else {
+            throw new RuntimeException("Can't find user by login - " + login);
+        }
+        return user;
     }
 }
