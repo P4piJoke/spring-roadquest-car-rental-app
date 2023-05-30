@@ -1,6 +1,7 @@
 package com.p4pijk.roadquest.controller.admin;
 
 import com.p4pijk.roadquest.entity.car.Car;
+import com.p4pijk.roadquest.entity.car.CarType;
 import com.p4pijk.roadquest.entity.user.Role;
 import com.p4pijk.roadquest.entity.user.User;
 import com.p4pijk.roadquest.model.CarModel;
@@ -37,7 +38,8 @@ public class AdminController {
     public String init(Model model) {
         model.addAttribute("cars", carService.findAll())
                 .addAttribute("users", userService.findByRole(BASIC))
-                .addAttribute("managers", userService.findByRole(MANAGER));
+                .addAttribute("managers", userService.findByRole(MANAGER))
+                .addAttribute("types",carTypeService.findAll());
         return RQLiterals.ADMIN_PAGE.value();
     }
 
@@ -69,6 +71,7 @@ public class AdminController {
                         .id(carModel.getId())
                         .name(carModel.getName())
                         .carType(carModel.getCarType())
+                        .status(true)
                         .build()
         );
 
@@ -125,6 +128,16 @@ public class AdminController {
     public String deleteManager(@RequestParam("managerId") int id) {
         userService.deleteById(id);
 
+        return RQLiterals.REDIRECT_ADMIN.value();
+    }
+
+    @GetMapping("/changePrice")
+    public String changeCarTypePrice(@RequestParam("typeId") int id, @RequestParam("price") int price){
+        CarType carType = carTypeService.findById(id);
+        carTypeService.save(CarType.builder()
+                .id(carType.getId())
+                .name(carType.getName())
+                .price(price).build());
         return RQLiterals.REDIRECT_ADMIN.value();
     }
 }

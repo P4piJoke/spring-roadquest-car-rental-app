@@ -23,6 +23,7 @@ DROP TABLE IF EXISTS `road-quest`.`car_type` ;
 CREATE TABLE IF NOT EXISTS `road-quest`.`car_type` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
+  `price` INT NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
@@ -41,6 +42,7 @@ CREATE TABLE IF NOT EXISTS `road-quest`.`car` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(255) NOT NULL,
   `car_type` INT UNSIGNED NOT NULL,
+  `status` TINYINT NOT NULL,
   PRIMARY KEY (`id`),
   CONSTRAINT `fk_car_car_type`
     FOREIGN KEY (`car_type`)
@@ -132,9 +134,10 @@ CREATE TABLE IF NOT EXISTS `road-quest`.`application` (
   `car` INT NOT NULL,
   `start_date` DATE NOT NULL,
   `end_date` DATE NOT NULL,
-  `rent_date` DATE NULL DEFAULT NULL,
+  `rent_date` DATETIME NULL DEFAULT NULL,
   `rent_status` INT UNSIGNED NOT NULL,
   `price` INT NULL DEFAULT NULL,
+  `descr` TEXT NULL,
   PRIMARY KEY (`id`),
   CONSTRAINT `fk_application_car1`
     FOREIGN KEY (`car`)
@@ -202,9 +205,9 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `road-quest`;
-INSERT INTO `road-quest`.`car_type` (`id`, `name`) VALUES (1, 'Soft');
-INSERT INTO `road-quest`.`car_type` (`id`, `name`) VALUES (2, 'Family');
-INSERT INTO `road-quest`.`car_type` (`id`, `name`) VALUES (3, 'Off-road');
-INSERT INTO `road-quest`.`car_type` (`id`, `name`) VALUES (4, 'Super');
+INSERT INTO `road-quest`.`car_type` (`id`, `name`,`price`) VALUES (1, 'Soft',100);
+INSERT INTO `road-quest`.`car_type` (`id`, `name`,`price`) VALUES (2, 'Family',150);
+INSERT INTO `road-quest`.`car_type` (`id`, `name`,`price`) VALUES (3, 'Off-road',250);
+INSERT INTO `road-quest`.`car_type` (`id`, `name`,`price`) VALUES (4, 'Super',500);
 
 COMMIT;

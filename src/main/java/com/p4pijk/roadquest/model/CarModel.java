@@ -18,4 +18,6 @@ public class CarModel {
 
     @NotNull(message = "Type is required")
     private CarType carType;
+
+    private int price;
 }

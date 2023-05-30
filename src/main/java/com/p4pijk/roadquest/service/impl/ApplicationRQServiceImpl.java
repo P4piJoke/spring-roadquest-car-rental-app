@@ -1,6 +1,7 @@
 package com.p4pijk.roadquest.service.impl;
 
 import com.p4pijk.roadquest.entity.order.Application;
+import com.p4pijk.roadquest.entity.order.RentStatus;
 import com.p4pijk.roadquest.repository.ApplicationRepository;
 import com.p4pijk.roadquest.service.ApplicationRQService;
 import lombok.RequiredArgsConstructor;
@@ -40,5 +41,10 @@ public class ApplicationRQServiceImpl implements ApplicationRQService {
     @Override
     public void deleteById(int id) {
         repository.deleteById(id);
+    }
+
+    @Override
+    public List<Application> findAllByRentStatus(RentStatus status) {
+        return repository.findAllByRentStatus(status);
     }
 }
