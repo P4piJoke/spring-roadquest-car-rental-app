@@ -1,7 +1,9 @@
 package com.p4pijk.roadquest.controller.user;
 
+import com.p4pijk.roadquest.entity.car.Car;
 import com.p4pijk.roadquest.entity.order.Application;
 import com.p4pijk.roadquest.entity.order.RentStatus;
+import com.p4pijk.roadquest.entity.user.User;
 import com.p4pijk.roadquest.model.ApplicationModel;
 import com.p4pijk.roadquest.service.ApplicationRQService;
 import com.p4pijk.roadquest.service.impl.CarRQServiceImpl;
@@ -46,21 +48,32 @@ public class RentController {
     @PostMapping("/saveApplication")
     private String saveApplication(@Valid @ModelAttribute("application")
                                    ApplicationModel applicationModel,
-                                   BindingResult bindingResult) {
+                                   BindingResult bindingResult,
+                                   @RequestParam(value = "passport", required = false) String passport) {
         if (bindingResult.hasErrors()) {
             return RQLiterals.FILL_APPLICATION_PAGE.value();
         }
+
+        if (passport != null){
+            User user = userService.findById(applicationModel.getCustomer().getId());
+            user.setPassport(Integer.valueOf(passport));
+            userService.save(user);
+        }
+
+        Car car = applicationModel.getCar();
+        car.setStatus(false);
 
         applicationService.save(
                 Application.builder()
                         .id(applicationModel.getId())
                         .customer(applicationModel.getCustomer())
-                        .car(applicationModel.getCar())
+                        .car(car)
                         .startDate(applicationModel.getStartDate())
                         .endDate(applicationModel.getEndDate())
                         .rentStatus(NEW)
                         .price(applicationModel.getCar().getCarType().getPrice()).build()
         );
+        carService.save(car);
 
         return RQLiterals.REDIRECT_USER.value();
     }

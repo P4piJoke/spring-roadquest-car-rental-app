@@ -211,3 +211,37 @@ INSERT INTO `road-quest`.`car_type` (`id`, `name`,`price`) VALUES (3, 'Off-road'
 INSERT INTO `road-quest`.`car_type` (`id`, `name`,`price`) VALUES (4, 'Super',500);
 
 COMMIT;
+
+-- Создание триггера для удаления записей через неделю после установки статуса "Completed"
+DELIMITER //
+CREATE TRIGGER trg_update_completed_application
+AFTER UPDATE ON road-quest.application
+FOR EACH ROW
+BEGIN
+  IF NEW.rent_status = (SELECT id FROM road-quest.rent_status WHERE name = 'Completed') THEN
+    SET @delete_date = DATE_ADD(NOW(), INTERVAL 7 DAY);
+    SET @delete_date = CONCAT(DATE(@delete_date), ' ', TIME(@delete_date));
+    INSERT INTO road-quest.application_delete_queue (application_id, delete_date)
+    VALUES (NEW.id, @delete_date);
+  END IF;
+END //
+DELIMITER ;
+
+-- Создание события для периодической проверки и удаления записей из application на основе данных из application_delete_schedule
+DELIMITER //
+CREATE EVENT evt_delete_completed_application
+ON SCHEDULE EVERY 1 DAY
+STARTS CURRENT_TIMESTAMP
+ENDS CURRENT_TIMESTAMP + INTERVAL 1 YEAR
+ON COMPLETION PRESERVE
+DO
+BEGIN
+  DELETE a
+  FROM road-quest.application a
+  JOIN road-quest.application_delete_schedule s ON a.id = s.application_id
+  WHERE s.delete_date <= NOW();
+
+  DELETE FROM road-quest.application_delete_schedule
+  WHERE delete_date <= NOW();
+END //
+DELIMITER ;

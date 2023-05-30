@@ -1,6 +1,7 @@
 package com.p4pijk.roadquest.controller.user;
 
 import com.p4pijk.roadquest.entity.order.RentStatus;
+import com.p4pijk.roadquest.entity.user.User;
 import com.p4pijk.roadquest.service.ApplicationRQService;
 import com.p4pijk.roadquest.service.CarRQService;
 import com.p4pijk.roadquest.service.impl.UserRQServiceImpl;
@@ -58,10 +59,8 @@ public class HomeController {
     }
     private void initUserCabinet(UserDetails userDetails, Model model) {
         String login = userDetails.getUsername();
-        model.addAttribute("currentUser", userService.findByLogin(login));
-        model.addAttribute("holdOrders",applicationService.findAllByRentStatus(ON_HOLD));
-        model.addAttribute("paidOrders",applicationService.findAllByRentStatus(PAID));
-        model.addAttribute("completedOrders",applicationService.findAllByRentStatus(COMPLETED));
-        model.addAttribute("refundedOrders",applicationService.findAllByRentStatus(REFUNDED));
+        User user = userService.findByLogin(login);
+        model.addAttribute("currentUser", user);
+        model.addAttribute("orders", applicationService.findByCustomer(user));
     }
 }

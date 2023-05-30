@@ -43,7 +43,8 @@ public class UserSecurityConfig {
     private static final String[] RESOURCE_LIST = {
             "/admin/**",
             "/manager/**",
-            "/rent/**"
+            "/rent/**",
+            "/profile/**"
     };
 
     private static final String[] MANAGER_LIST = {
