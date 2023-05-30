@@ -17,27 +17,20 @@ public class ApplicationModel {
 
     private int id;
 
-
     private User customer;
-
 
     private Car car;
 
-    @DateTimeFormat
-    @NotNull(message = "Start date is required")
     private LocalDate startDate;
 
-    @DateTimeFormat
-    @NotNull(message = "End date is required")
     private LocalDate endDate;
 
 
     private LocalDate rentDate;
 
-
-    @NotNull(message = "Rent status is required")
     private RentStatus rentStatus;
 
-
     private int price;
+
+    private String description;
 }

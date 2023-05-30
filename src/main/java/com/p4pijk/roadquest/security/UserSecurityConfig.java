@@ -18,8 +18,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @RequiredArgsConstructor
 public class UserSecurityConfig {
 
-    private final UserDetailsServiceImpl service;
-
     private static final String[] WHITE_LIST = {
             "/css/**",
             "/img/**",
@@ -31,8 +29,28 @@ public class UserSecurityConfig {
 
     private static final String[] ADMIN_LIST = {
             "/admin",
-            "/admin/addCar"
+            "/admin/addCar",
+            "/admin/editCar",
+            "/admin/saveCar",
+            "/admin/deleteCar",
+            "/admin/changeUser",
+            "/admin/addManager",
+            "/admin/saveManager",
+            "/admin/deleteManager",
+            "/admin/changePrice"
     };
+
+    private static final String[] RESOURCE_LIST = {
+            "/admin/**",
+            "/manager/**",
+            "/rent/**",
+            "/profile/**"
+    };
+
+    private static final String[] MANAGER_LIST = {
+            "/manager"
+    };
+    private final UserDetailsServiceImpl service;
 
     @Bean
     public PasswordEncoder encoder() {
@@ -59,7 +77,7 @@ public class UserSecurityConfig {
 
         http.authorizeHttpRequests(configurer ->
                 configurer
-                        .requestMatchers("/manager").hasAuthority("MANAGER")
+                        .requestMatchers(MANAGER_LIST).hasAuthority("MANAGER")
                         .requestMatchers(ADMIN_LIST).hasAuthority("ADMIN")
                         .requestMatchers(WHITE_LIST).permitAll()
                         .anyRequest().authenticated()
@@ -80,7 +98,7 @@ public class UserSecurityConfig {
             @Override
             public void addResourceHandlers(ResourceHandlerRegistry registry) {
                 registry
-                        .addResourceHandler("/admin/**", "/manager/**")
+                        .addResourceHandler(RESOURCE_LIST)
                         .addResourceLocations("classpath:/static/");
             }
         };

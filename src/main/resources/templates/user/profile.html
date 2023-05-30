@@ -12,37 +12,159 @@
     <header class="d-flex flex-wrap align-items-center
     justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
         <div class="col-md-3 mb-2 mb-md-0">
-            <a th:href="@{/}" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
-                <img src="img/logo.svg" class="logo-img" alt="roadquest" >
+            <a th:href="@{/}"
+               class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+                <img src="img/logo.svg" class="logo-img" alt="roadquest">
             </a>
         </div>
         <div>
             <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
                 <li>
-                    <a href="#" class="nav-link px-2 link-secondary">Home</a>
+                    <a th:href="@{/}" class="nav-link px-2 link-secondary">Home</a>
                 </li>
                 <li>
-                    <a href="#" class="nav-link px-2 link-secondary">Rent a car</a>
+                    <a th:href="@{/rent}" class="nav-link px-2 link-secondary">Rent a car</a>
                 </li>
                 <li>
-                    <a href="#" class="nav-link px-2 link-secondary">About</a>
+                    <a th:href="@{/about}" class="nav-link px-2 link-secondary">About</a>
                 </li>
             </ul>
         </div>
         <div class="col-md-3 text-end">
-            <a sec:authorize="!isAuthenticated()" th:href="@{/login}" class="btn btn-outline-primary me-2">
-                Login
-            </a>
-            <a sec:authorize="!isAuthenticated()" th:href="@{/signup}" class="btn btn-primary">
-                Sign-up
-            </a>
-            <a sec:authorize="isAuthenticated()" th:href="@{/logout}" class="btn btn-primary">
+            <a th:href="@{/logout}" class="btn btn-primary">
                 Logout
             </a>
             <a></a>
         </div>
     </header>
-    <h1>I'm User</h1>
+    <div class="row">
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="card mb-4">
+                    <div class="card-body text-center">
+                        <img src="img/user.png" alt="avatar"
+                             class="rounded-circle img-fluid" style="width: 150px;">
+                        <h5 class="my-3" th:text="${currentUser.lastName + ' ' + currentUser.firstName}"></h5>
+                    </div>
+                </div>
+                <div class="card mb-4 mb-lg-0">
+                    <div class="card-body p-0">
+                        <ul class="list-group list-group-flush rounded-3">
+                            <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                                <p class="mb-0"
+                                   th:text="'Balance: ' + ${currentUser.bill == null ? 0 : currentUser.bill}">
+                                    https://mdbootstrap.com</p>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                                <button id="topUp" class="btn btn-primary">Top up</button>
+                                <div id="myModal" class="modal">
+                                    <!-- Modal content -->
+                                    <div class="modal-content">
+                                        <form th:action="@{/profile/cashIn}" method="post">
+                                            <input th:value="${currentUser.id}" th:name="userId" type="hidden">
+                                            <label for="cash">Amount:</label>
+                                            <input type="text" pattern="[0-9]{1,9}" th:name="cash" id="cash" required>
+                                            <button type="submit" class="btn btn-primary" id="confirm">Confirm</button>
+                                        </form>
+                                        <!--                                        <span class="close"></span>-->
+                                    </div>
+
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-8">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <p class="mb-0">Full Name</p>
+                            </div>
+                            <div class="col-sm-9">
+                                <p class="text-muted mb-0"
+                                   th:text="${currentUser.lastName + ' ' + currentUser.firstName}"></p>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <p class="mb-0">Email</p>
+                            </div>
+                            <div class="col-sm-9">
+                                <p class="text-muted mb-0" th:text="${currentUser.email}"></p>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <p class="mb-0">Phone</p>
+                            </div>
+                            <div class="col-sm-9">
+                                <p class="text-muted mb-0" th:text="${currentUser.phoneNumber}"></p>
+                            </div>
+                        </div>
+                        <hr th:if="${currentUser.passport != null}">
+                        <div class="row" th:if="${currentUser.passport != null}">
+                            <div class="col-sm-3">
+                                <p class="mb-0">Passport</p>
+                            </div>
+                            <div class="col-sm-9">
+                                <p class="text-muted mb-0" th:text="${currentUser.passport}"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-16">
+                    <div class="card mb-16 mb-md-0">
+                        <div class="card-body">
+                            <p class="mb-4">
+                                Orders status
+                            </p>
+                            <div class="table-responsive">
+                                <table class="table table-borderless table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th>Car</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="order : ${orders}">
+
+                                        <td th:text="${order.car.name}"/>
+                                        <td th:text="${order.rentStatus.name}"/>
+                                        <td th:if="${order.rentStatus.name == 'On hold' or order.rentStatus.name == 'Paid'}">
+                                            <a th:if="${order.rentStatus.name == 'On hold'}"
+                                               th:href="@{/profile/payApplication(orderId=${order.id})}"
+                                               class="btn btn-info btn-sm">
+                                                Pay
+                                            </a>
+                                            <a th:if="${order.rentStatus.name == 'Paid'}"
+                                               th:href="@{/profile/payApplication(orderId=${order.id})}"
+                                               class="btn btn-info btn-sm">
+                                                Update
+                                            </a>
+                                        </td>
+                                        <td th:else>
+                                            Wait for manager review
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
+<script src="js/modal.js"></script>
 </body>
 </html>

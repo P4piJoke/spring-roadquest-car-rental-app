@@ -17,6 +17,7 @@ public enum RQLiterals {
     REDIRECT_USER("redirect:/profile"),
     USER_PROFILE("user/profile"),
     RENT_PAGE("user/rent-page"),
+    FILL_APPLICATION_PAGE("user/fill-application"),
     ABOUT_PAGE("user/rent-page");
 
 

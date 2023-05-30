@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+>
 <head>
     <meta charset="UTF-8">
     <title>Rent</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/style.css" type="text/css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+          integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
 </head>
 <body>
 <div class="container">
@@ -43,7 +45,37 @@
     </header>
 </div>
 <div class="container">
-<!--    cars -->
+    <main class="vh-100">
+
+        <h3>Car list</h3>
+        <hr>
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped">
+                <thead class="table-dark">
+                <tr>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Price</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="car : ${actualCars}">
+
+                    <td th:text="${car.name}"/>
+                    <td th:text="${car.carType.name}"/>
+                    <td th:text="${car.carType.price}"/>
+                    <td>
+                        <a th:href="@{/rent/fillApplication(carId=${car.id})}"
+                           class="btn btn-info btn-sm">
+                            Rent
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
 </div>
 
 <!-- Some data about company -->
@@ -77,7 +109,7 @@
         </div>
 
         <div class="text-center text-dark p-3" style="background-color: #e74f41;">
-            © 2020 Copyright:
+            © 2023 Copyright:
             <a class="text-dark" href="https://github.com/P4piJoke/spring-roadquest-car-rental-app" target="_blank">
                 RoadQuest inc.</a>
         </div>

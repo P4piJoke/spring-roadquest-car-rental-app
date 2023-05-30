@@ -32,4 +32,7 @@ public class Car {
     @ManyToOne
     @JoinColumn(name = "car_type")
     private CarType carType;
+
+    @Column(name = "status")
+    private boolean status;
 }

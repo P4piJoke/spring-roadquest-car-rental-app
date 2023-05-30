@@ -14,8 +14,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @Entity
@@ -45,7 +47,8 @@ public class Application {
     private LocalDate endDate;
 
     @Column(name = "rent_date")
-    private LocalDate rentDate;
+    @CreationTimestamp
+    private LocalDateTime rentDate;
 
     @ManyToOne
     @JoinColumn(name = "rent_status")
@@ -53,4 +56,7 @@ public class Application {
 
     @Column(name = "price")
     private int price;
+
+    @Column(name = "descr")
+    private String description;
 }

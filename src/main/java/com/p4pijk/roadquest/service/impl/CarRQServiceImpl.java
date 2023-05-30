@@ -42,4 +42,9 @@ public class CarRQServiceImpl implements CarRQService {
     public void deleteById(int id) {
         repository.deleteById(id);
     }
+
+    @Override
+    public List<Car> findAllActiveCars() {
+        return repository.findAllByStatus(true);
+    }
 }
