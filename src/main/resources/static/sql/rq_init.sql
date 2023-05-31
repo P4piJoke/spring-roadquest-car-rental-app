@@ -218,7 +218,7 @@ CREATE TRIGGER trg_update_completed_application
 AFTER UPDATE ON road-quest.application
 FOR EACH ROW
 BEGIN
-  IF NEW.rent_status = (SELECT id FROM road-quest.rent_status WHERE name = 'Completed') THEN
+  IF NEW.rent_status = (SELECT id FROM road-quest.rent_status WHERE name in ('Completed','Refunded')) THEN
     SET @delete_date = DATE_ADD(NOW(), INTERVAL 7 DAY);
     SET @delete_date = CONCAT(DATE(@delete_date), ' ', TIME(@delete_date));
     INSERT INTO road-quest.application_delete_queue (application_id, delete_date)

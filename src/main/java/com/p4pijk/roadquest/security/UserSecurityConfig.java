@@ -48,7 +48,10 @@ public class UserSecurityConfig {
     };
 
     private static final String[] MANAGER_LIST = {
-            "/manager"
+            "/manager",
+            "/manager/inspectOrder",
+            "/manager/declineApplication",
+            "/manager/acceptApplication"
     };
     private final UserDetailsServiceImpl service;
 

@@ -52,15 +52,7 @@ public class ApplicationRQServiceImpl implements ApplicationRQService {
     }
 
     @Override
-    public Application findByCustomer(User user) {
-        Application application;
-        Optional<Application> byCustomer = repository.findByCustomer(user);
-        if (byCustomer.isPresent()){
-            application = byCustomer.get();
-        }
-        else {
-            throw new RuntimeException("Can't find application by user - " + user.getLogin());
-        }
-        return application;
+    public List<Application> findByCustomer(User user) {
+        return repository.findByCustomer(user);
     }
 }

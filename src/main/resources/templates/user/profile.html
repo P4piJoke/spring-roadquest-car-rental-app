@@ -128,30 +128,35 @@
                                 <table class="table table-borderless table-striped">
                                     <thead>
                                     <tr>
-                                        <th>Car</th>
-                                        <th>Status</th>
+                                        <th>Order data</th>
+<!--                                        <th>Status</th>-->
                                         <th>Action</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     <tr th:each="order : ${orders}">
-
                                         <td th:text="${order.car.name}"/>
                                         <td th:text="${order.rentStatus.name}"/>
-                                        <td th:if="${order.rentStatus.name == 'On hold' or order.rentStatus.name == 'Paid'}">
-                                            <a th:if="${order.rentStatus.name == 'On hold'}"
+                                        <td th:switch="${order.rentStatus.name}">
+                                            <a th:case="'On hold'"
                                                th:href="@{/profile/payApplication(orderId=${order.id})}"
-                                               class="btn btn-info btn-sm">
+                                               class="btn btn-primary btn-sm">
                                                 Pay
                                             </a>
-                                            <a th:if="${order.rentStatus.name == 'Paid'}"
-                                               th:href="@{/profile/payApplication(orderId=${order.id})}"
-                                               class="btn btn-info btn-sm">
-                                                Update
+                                            <a th:case="'Paid'"
+                                               th:href="@{/profile/returnCar(orderId=${order.id})}"
+                                               class="btn btn-primary btn-sm">
+                                                Return
                                             </a>
-                                        </td>
-                                        <td th:else>
-                                            Wait for manager review
+                                            <th:block th:case="'Completed'">
+                                                Closed
+                                            </th:block>
+                                            <th:block th:case="'Refunded'">
+                                                Show description
+                                            </th:block>
+                                            <th:block th:case="*">
+                                                Wait for manager
+                                            </th:block>
                                         </td>
                                     </tr>
                                     </tbody>

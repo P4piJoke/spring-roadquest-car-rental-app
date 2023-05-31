@@ -9,5 +9,5 @@ import java.util.List;
 public interface ApplicationRQService extends RoadQuestService<Application> {
     List<Application> findAllByRentStatus(RentStatus status);
 
-    Application findByCustomer(User user);
+    List<Application> findByCustomer(User user);
 }

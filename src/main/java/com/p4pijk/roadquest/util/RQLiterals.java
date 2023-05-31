@@ -11,6 +11,8 @@ public enum RQLiterals {
 
 //    MANAGER PAGE
     REDIRECT_MANAGER("redirect:/manager"),
+    MANAGER_PAGE("manager/manager"),
+    INSPECT_ORDER("manager/inspect-order"),
 
 
 //    USER PAGE
