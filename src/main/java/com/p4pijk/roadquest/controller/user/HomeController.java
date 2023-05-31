@@ -21,11 +21,6 @@ import java.util.Collection;
 @RequiredArgsConstructor
 public class HomeController {
 
-    private static final RentStatus ON_HOLD = new RentStatus(2,"On hold");
-    private static final RentStatus PAID = new RentStatus(3,"Paid");
-    private static final RentStatus COMPLETED = new RentStatus(4,"Completed");
-    private static final RentStatus REFUNDED = new RentStatus(5,"Refunded");
-
     private final UserRQServiceImpl userService;
     private final CarRQService carService;
     private final ApplicationRQService applicationService;

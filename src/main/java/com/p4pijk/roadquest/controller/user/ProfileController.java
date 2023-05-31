@@ -27,7 +27,7 @@ public class ProfileController {
     @PostMapping("/cashIn")
     public String cashIn(@RequestParam("userId") int id, @RequestParam("cash") int cash){
         User byId = userService.findById(id);
-        byId.setBill(cash);
+        byId.setBill(byId.getBill() + cash);
         userService.save(byId);
 
         return RQLiterals.REDIRECT_USER.value();

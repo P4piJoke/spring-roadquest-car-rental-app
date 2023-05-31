@@ -17,7 +17,7 @@
             </a>
         </div>
         <div class="col-md-3 text-end">
-            <a sec:authorize="isAuthenticated()" th:href="@{/logout}" class="btn btn-primary">
+            <a th:href="@{/logout}" class="btn btn-primary">
                 Logout
             </a>
         </div>
@@ -29,80 +29,12 @@
                     <div class="card-body text-center">
                         <img src="img/user.png" alt="avatar"
                              class="rounded-circle img-fluid" style="width: 150px;">
-                        <h5 class="my-3" th:text="${currentUser.lastName + ' ' + currentUser.firstName}"></h5>
-                    </div>
-                </div>
-                <div class="card mb-4 mb-lg-0">
-                    <div class="card-body p-0">
-                        <ul class="list-group list-group-flush rounded-3">
-                            <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                                <p class="mb-0"
-                                   th:text="'Balance: ' + ${currentUser.bill == null ? 0 : currentUser.bill}">
-                                    https://mdbootstrap.com</p>
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                                <button id="topUp" class="btn btn-primary">Top up</button>
-                                <div id="myModal" class="modal">
-                                    <!-- Modal content -->
-                                    <div class="modal-content">
-                                        <form th:action="@{/profile/cashIn}" method="post">
-                                            <input th:value="${currentUser.id}" th:name="userId" type="hidden">
-                                            <label for="cash">Amount:</label>
-                                            <input type="text" pattern="[0-9]{1,9}" th:name="cash" id="cash" required>
-                                            <button type="submit" class="btn btn-primary" id="confirm">Confirm</button>
-                                        </form>
-                                        <!--                                        <span class="close"></span>-->
-                                    </div>
-
-                                </div>
-                            </li>
-                        </ul>
+                        <h5 class="my-3">Manager</h5>
                     </div>
                 </div>
             </div>
 
             <div class="col-lg-8">
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-sm-3">
-                                <p class="mb-0">Full Name</p>
-                            </div>
-                            <div class="col-sm-9">
-                                <p class="text-muted mb-0"
-                                   th:text="${currentUser.lastName + ' ' + currentUser.firstName}"></p>
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="row">
-                            <div class="col-sm-3">
-                                <p class="mb-0">Email</p>
-                            </div>
-                            <div class="col-sm-9">
-                                <p class="text-muted mb-0" th:text="${currentUser.email}"></p>
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="row">
-                            <div class="col-sm-3">
-                                <p class="mb-0">Phone</p>
-                            </div>
-                            <div class="col-sm-9">
-                                <p class="text-muted mb-0" th:text="${currentUser.phoneNumber}"></p>
-                            </div>
-                        </div>
-                        <hr th:if="${currentUser.passport != null}">
-                        <div class="row" th:if="${currentUser.passport != null}">
-                            <div class="col-sm-3">
-                                <p class="mb-0">Passport</p>
-                            </div>
-                            <div class="col-sm-9">
-                                <p class="text-muted mb-0" th:text="${currentUser.passport}"></p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
                 <div class="col-md-16">
                     <div class="card mb-16 mb-md-0">
                         <div class="card-body">
@@ -114,29 +46,40 @@
                                     <thead>
                                     <tr>
                                         <th>Car</th>
+                                        <th>Renter</th>
                                         <th>Status</th>
                                         <th>Action</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr th:each="order : ${orders}">
+                                    <tr th:each="order : ${applications}">
 
                                         <td th:text="${order.car.name}"/>
+                                        <td th:text="${order.customer.lastName + ' ' + order.customer.firstName}"/>
                                         <td th:text="${order.rentStatus.name}"/>
-                                        <td th:if="${order.rentStatus.name == 'On hold' or order.rentStatus.name == 'Paid'}">
-                                            <a th:if="${order.rentStatus.name == 'On hold'}"
-                                               th:href="@{/profile/payApplication(orderId=${order.id})}"
-                                               class="btn btn-info btn-sm">
-                                                Pay
-                                            </a>
-                                            <a th:if="${order.rentStatus.name == 'Paid'}"
-                                               th:href="@{/profile/payApplication(orderId=${order.id})}"
-                                               class="btn btn-info btn-sm">
-                                                Update
-                                            </a>
-                                        </td>
-                                        <td th:else>
-                                            Wait for manager review
+                                        <td>
+                                            <th:block th:if="${order.rentStatus.name == 'New'}">
+                                                <a th:href="@{/manager/acceptApplication(applicationId=${order.id})}"
+                                                   class="btn btn-info btn-sm">
+                                                    Accept
+                                                </a>
+                                                <a th:href="@{/manager/inspectOrder(applicationId=${order.id})}"
+                                                   class="btn btn-danger btn-sm">
+                                                    Decline
+                                                </a>
+                                            </th:block>
+                                            <th:block th:if="${order.rentStatus.name == 'On hold'}">
+                                                Pending payment
+                                            </th:block>
+                                            <th:block th:if="${order.rentStatus.name == 'Paid'}">
+                                                Pending returns
+                                            </th:block>
+                                            <th:block th:if="${order.rentStatus.name == 'Completed'}">
+                                                Closed
+                                            </th:block>
+                                            <th:block th:if="${order.rentStatus.name == 'Refunded'}">
+                                                Canceled
+                                            </th:block>
                                         </td>
                                     </tr>
                                     </tbody>
