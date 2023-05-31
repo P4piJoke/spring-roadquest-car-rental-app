@@ -1,9 +1,12 @@
 package com.p4pijk.roadquest.controller.user;
 
+import com.p4pijk.roadquest.entity.car.Car;
 import com.p4pijk.roadquest.entity.order.Application;
 import com.p4pijk.roadquest.entity.order.RentStatus;
 import com.p4pijk.roadquest.entity.user.User;
 import com.p4pijk.roadquest.service.ApplicationRQService;
+import com.p4pijk.roadquest.service.CarRQService;
+import com.p4pijk.roadquest.service.impl.CarRQServiceImpl;
 import com.p4pijk.roadquest.service.impl.UserRQServiceImpl;
 import com.p4pijk.roadquest.util.RQLiterals;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +26,7 @@ public class ProfileController {
     private static final RentStatus COMPLETED = new RentStatus(4,"Completed");
     private final UserRQServiceImpl userService;
     private final ApplicationRQService applicationService;
+    private final CarRQServiceImpl carService;
 
     @PostMapping("/cashIn")
     public String cashIn(@RequestParam("userId") int id, @RequestParam("cash") int cash){
@@ -49,8 +53,13 @@ public class ProfileController {
     @GetMapping("/returnCar")
     public String returnCar(@RequestParam("orderId") int id){
         Application application = applicationService.findById(id);
+        Car car = application.getCar();
+
         application.setRentStatus(COMPLETED);
+        car.setStatus(true);
+
         applicationService.save(application);
+        carService.save(car);
 
         return RQLiterals.REDIRECT_USER.value();
     }
