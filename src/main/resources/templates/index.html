@@ -1,106 +1,313 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/style.css" type="text/css">
+    <link rel="stylesheet" href="css/main.css" type="text/css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
           integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
-          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
+
 <body>
-<div class="container">
-    <header class="d-flex flex-wrap align-items-center
-    justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
-        <div class="col-md-3 mb-2 mb-md-0">
-            <a th:href="@{/}"
-               class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
-                <img src="img/logo.svg" class="logo-img" alt="roadquest">
-            </a>
-        </div>
-        <div>
-            <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-                <li>
-                    <a th:href="@{/}" class="nav-link px-2 link-secondary">Home</a>
-                </li>
-                <li>
-                    <a th:href="@{/rent}" class="nav-link px-2 link-secondary">Rent a car</a>
-                </li>
-                <li>
-                    <a th:href="@{/about}" class="nav-link px-2 link-secondary">About</a>
-                </li>
-            </ul>
-        </div>
-        <div class="col-md-3 text-end">
-            <a sec:authorize="!isAuthenticated()" th:href="@{/login}" class="btn btn-outline-primary me-2">
-                Login
-            </a>
-            <a sec:authorize="!isAuthenticated()" th:href="@{/signup}" class="btn btn-primary">
-                Sign-up
-            </a>
-            <a sec:authorize="isAuthenticated()" th:href="@{/profile}" class="btn btn-outline-primary me-2">
-                Profile
-            </a>
-            <a sec:authorize="isAuthenticated()" th:href="@{/logout}" class="btn btn-primary">
-                Logout
-            </a>
-            <a></a>
-        </div>
-    </header>
-</div>
-<div class="container">
-    <main class="vh-100">
-        <h1 sec:authorize="hasAuthority('ADMIN')">I'm ADMIN</h1>
-        <h1 sec:authorize="hasAuthority('BASIC')">I'm BASIC</h1>
-        <h1 sec:authorize="hasAuthority('MANAGER')">I'm MANAGER</h1>
-        <div class="row">
-            <div class="col text-center">
-                <a class="btn btn-default" th:href="@{/rent}">Choose a car</a>
+<div class="wrapper">
+    <header class=" header">
+        <img src="/img/back.jpg" alt="" class="img-backg">
+        <div class="container-fluid header__nav">
+            <nav class="navbar navbar-expand-lg">
+                <div class="container">
+                    <a href="index.html" class="navbar-brand text-decoration-underline">
+                        <img src="/img/logo.svg" class="header__logo img-fluid" alt="roadquest">
+                    </a>
+                    <div class="header__btns order-3 d-flex align-items-center">
+                        <a sec:authorize="!isAuthenticated()" th:href="@{/login}"
+                           class="btn btn-outline-primary me-2">
+                            Login
+                        </a>
+                        <a sec:authorize="!isAuthenticated()" th:href="@{/signup}" class="btn btn-primary">
+                            Sign-up
+                        </a>
+                        <a sec:authorize="isAuthenticated()" th:href="@{/profile}" class="btn btn-outline-primary me-2">
+                            Profile
+                        </a>
+                        <a sec:authorize="isAuthenticated()" th:href="@{/logout}" class="btn btn-primary">
+                            Logout
+                        </a>
+
+                        <button class="navbar-toggler navbar-dark" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false"
+                                aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                    </div>
+                    <div class="header__content">
+                        <ul class="navbar-nav header__menu menu">
+                            <li class="menu__item nav-item">
+                                <a th:href="@{/}" class="menu__link nav-link active" aria-current="page">Home</a>
+                            </li>
+                            <li class="menu__item nav-item">
+                                <a th:href="@{/rent}" class="menu__link nav-link">Rent a car</a>
+                            </li>
+                            <li class="menu__item nav-item">
+                                <a th:href="@{/about}" class="menu__link nav-link">About</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <div class="collapse navbar-collapse header__mob-content container" id="navbarCollapse">
+                <ul class="navbar-nav ms-auto header__menu menu">
+                    <li class="menu__item nav-item">
+                        <a th:href="@{/}" class="menu__link nav-link active" aria-current="page">Home</a>
+                    </li>
+                    <li class="menu__item nav-item">
+                        <a th:href="@{/rent}" class="menu__link nav-link">Rent a car</a>
+                    </li>
+                    <li class=" menu__item nav-item">
+                        <a th:href="@{/about}" class="menu__link nav-link">About</a>
+                    </li>
+                </ul>
             </div>
         </div>
-    </main>
-</div>
+        <div class="header__first-main first-main">
+            <div class="container">
+                <div class="first-main__content d-flex flex-column justify-content-center align-content-center">
+                    <div class="first-main__title">
+                        Start your next travel adventure with us today!
+                    </div>
+                    <div class="first-main__body text-center">
+                        Discover the world of travel with our wide range of cars available for rent. Whether you're planning a romantic getaway for two, an unforgettable family vacation, or an extreme road trip with friends, we have a car to suit your needs.
+                    </div>
+                    <a class="first-main__rentcarbtn btn btn-default" th:href="@{/rent}">Choose a car</a>
 
-<!-- Some data about company -->
-<!-- Remove the container if you want to extend the Footer to full width. -->
-<div>
-    <footer class="text-center text-white" style="background-color: #eb857c;">
+                </div>
+            </div>
+        </div>
+    </header>
+    <main class="main">
+        <section class="main__about about">
+            <div class="container">
+                <div class="about__content">
+                    <div class="about__title title text-center">About Us</div>
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <img src="img/aboutus.jpg" alt="aboutus" class="img-fluid">
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-12 align-self-center">
+                            <p class="about__body">
+                                RoadQuest is a leading travel car rental company with a mission to provide
+                                an unforgettable and hassle-free travel experience for our customers.
+                                Our goal is to make your trip comfortable, free and exciting.
+                                <br>
+                                <br>
+                                Our priority is your satisfaction. We understand that each client
+                                has unique needs and requirements, so we work individually with each order.
+                                Our team will be happy to help you with the choice of a car, advise on the route
+                                and provide the necessary information for a comfortable trip.
+                                <br>
+                                <br>
+                                Join us today and give us the opportunity to provide you with an unrivaled travel
+                                car rental experience. Rest assured, we will make your trip safe,
+                                comfortable and exciting!
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="main__pluses pluses">
+            <div class="container">
+                <div class="pluses__content">
+                    <div class="pluses__title title">Why us</div>
+                    <div class="row">
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <div class="pluses__card plcard">
+                                <div class="plcard__icon">
+                                    <img src="img/variety.jpg" class="img-fluid" alt="icon">
+                                </div>
+                                <div class="plcard__headtext">
+                                    Variety of cars
+                                </div>
+                                <div class="plcard__body">
+                                    We offer a wide range of cars of different makes, models, and classes
+                                    to meet the needs of every customer. From economical cars to luxury vehicles,
+                                    you will find the right one for you. We strive to provide you with the most
+                                    comfortable and stylish car to make your trip truly unforgettable.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <div class="pluses__card plcard">
+                                <div class="plcard__icon">
+                                    <img src="img/quality.jpg" class="img-fluid" alt="icon">
+                                </div>
+                                <div class="plcard__headtext">
+                                    High quality and reliability
+                                </div>
+                                <div class="plcard__body">
+                                    We thoroughly maintain and technically check each car before renting it out.
+                                    Our fleet consists of cars from the most renowned manufacturers, which guarantees
+                                    their quality and reliability. You can be sure that your car will work flawlessly
+                                    throughout your trip, giving you peace of mind and confidence.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <div class="pluses__card plcard">
+                                <div class="plcard__icon">
+                                    <img src="img/client.jpg" class="img-fluid" alt="icon">
+                                </div>
+                                <div class="plcard__headtext">
+                                    Client-oriented approach
+                                </div>
+                                <div class="plcard__body">
+                                    Our team works to meet the needs and desires of our clients. We understand that
+                                    everyone has their own unique requirements, so we provide an individual
+                                    approach to each order. Our professionals are ready to assist and advise you
+                                    on the choice of car, develop the best route and answer all your questions.
+                                    Your satisfaction is our priority, and we do our best to provide you with
+                                    an unforgettable trip.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="main__cars cars">
+            <div class="container">
+                <div class="cars__content">
+                    <div class="cars__title title">Our Cars</div>
+                    <div class="row">
+                        <div class="col-lg-3 col-md-6 col-sm-12 mb-3">
+                            <div class="cars__card carscard">
+                                <div class="carscard__image">
+                                    <img src="img/car.png" class="img-fluid" alt="car1">
+                                </div>
+                                <div class="carscard__title">
+                                    Regular car
+                                </div>
+                                <div class="carscard__body">
+                                    Our company offers a wide range of ordinary cars that are ideal for
+                                    everyday travel and comfortable movement in the city.
+                                </div>
+                                <a th:href="@{/rent?filters=1}" class="carscard__button btn btn-primary">Check</a>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-12 mb-3">
+                            <div class="cars__card carscard">
+                                <div class="carscard__image">
+                                    <img src="img/family.png" class="img-fluid" alt="car1">
+                                </div>
+                                <div class="carscard__title">
+                                    Family car
+                                </div>
+                                <div class="carscard__body">
+                                    Our family cars meet the highest standards of safety and comfort,
+                                    providing convenience and enjoyment for your entire family.
+                                </div>
+                                <a th:href="@{/rent?filters=2}" class="carscard__button btn btn-primary">Check</a>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-12  mb-3">
+                            <div class="cars__card carscard">
+                                <div class="carscard__image">
+                                    <img src="img/jeeps.png" class="img-fluid" alt="car1">
+                                </div>
+                                <div class="carscard__title">
+                                    Off-road car
+                                </div>
+                                <div class="carscard__body">
+                                    With our powerful and reliable off-road vehicles, you can overcome any
+                                    obstacles and enjoy wilderness adventures without limits.
+                                </div>
+                                <a th:href="@{/rent?filters=3}" class="carscard__button btn btn-primary">Check</a>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-12 mb-3">
+                            <div class="cars__card carscard">
+                                <div class="carscard__image">
+                                    <img src="img/sport-car.png" class="img-fluid" alt="car1">
+                                </div>
+                                <div class="carscard__title">
+                                    Luxury car
+                                </div>
+                                <div class="carscard__body">
+                                    With powerful engines and stylish designs, our sports cars let you feel the
+                                    adrenaline and pleasure of speed, delivering an unrivaled driving experience.
+                                </div>
+                                <a th:href="@{/rent?filters=4}" class="carscard__button btn btn-primary">Check</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="main__contact contact">
+            <div class="container">
+                <div class="contact__content">
+                    <div class="contact__title title">
+                        Contacts
+                    </div>
+                    <form action="https://formsubmit.co/danil.papizhuk02@gmail.com" method="post" class="contact__form">
+                        <div class="d-flex flex-column">
+                            <label>Ім'я</label>
+                            <input type="text" name="name" id="clientname" placeholder="Name">
+                        </div>
+                        <input type="hidden" name="_next" th:value="@{/}">
+                        <div class="d-flex flex-column">
+                            <label>Пошта</label>
+                            <input type="text" name="email" required id="clientemail" placeholder="Email">
+                        </div>
+                        <div class="d-flex flex-column">
+                            <label>Телефон</label>
+                            <input type="number" name="phone" id="clientphone" placeholder="Phone number">
+                        </div>
+                        <div class="d-flex flex-column">
+                            <label>Повідомлення</label>
+                            <textarea name="message" id="clientmessage" cols="30" rows="10" placeholder="Your message"></textarea>
+                        </div>
+                        <button class="contact__button btn btn-primary" type="submit">Відправити</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+    </main>
+    <footer class="text-center text-white footer" style="background-color: #eb857c;">
         <!-- Grid container -->
         <div class="container pt-4">
             <!-- Section: Social media -->
             <section class="mb-4">
                 <!-- Linkedin -->
-                <a
-                        class="btn btn-link btn-floating btn-lg text-dark m-1"
-                        target="_blank"
-                        href="https://www.linkedin.com/in/danylo-papizhuk-3667b017b/"
-                        role="button"
-                        data-mdb-ripple-color="dark"
-                ><i class="fab fa-linkedin"></i
-                ></a>
+                <a class="btn btn-link btn-floating btn-lg text-dark m-1" target="_blank"
+                   href="https://www.linkedin.com/in/danylo-papizhuk-3667b017b/" role="button"
+                   data-mdb-ripple-color="dark"><i class="fab fa-linkedin"></i></a>
                 <!-- Github -->
-                <a
-                        class="btn btn-link btn-floating btn-lg text-dark m-1"
-                        target="_blank"
-                        href="https://github.com/P4piJoke"
-                        role="button"
-                        data-mdb-ripple-color="dark"
-                ><i class="fab fa-github"></i
-                ></a>
+                <a class="btn btn-link btn-floating btn-lg text-dark m-1" target="_blank"
+                   href="https://github.com/P4piJoke" role="button" data-mdb-ripple-color="dark"><i
+                        class="fab fa-github"></i></a>
             </section>
             <!-- Section: Social media -->
         </div>
 
         <div class="text-center text-dark p-3" style="background-color: #e74f41;">
-            © 2020 Copyright:
+            © 2023 Copyright:
             <a class="text-dark" href="https://github.com/P4piJoke/spring-roadquest-car-rental-app" target="_blank">
                 RoadQuest inc.</a>
         </div>
         <!-- Copyright -->
     </footer>
 </div>
-<!-- End of .container -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
 </body>
+
+
 </html>
