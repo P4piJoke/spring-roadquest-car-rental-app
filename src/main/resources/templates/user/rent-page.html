@@ -44,37 +44,79 @@
         </div>
     </header>
 </div>
-<div class="container">
+<div class="container vh-100">
     <main class="vh-100">
-
         <h3>Car list</h3>
         <hr>
-        <div class="table-responsive">
-            <table class="table table-bordered table-striped">
-                <thead class="table-dark">
-                <tr>
-                    <th>Name</th>
-                    <th>Type</th>
-                    <th>Price</th>
-                    <th>Action</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="car : ${actualCars}">
+        <div class="row">
+            <div class="col-2">
+                <form action="#" th:action="@{/rent}" method="get" class="form-control">
+                    <th:block th:each="filter : ${filters}">
+                        <label>
+                            <input type="checkbox" name="filters" th:value="${filter.id}"
+                                   th:checked="${selectedFilters.contains(filter)}">
+                            <span th:text="${filter.name}"></span>
+                        </label>
+                        <br>
+                    </th:block>
+                    <br>
+                    <button type="submit" class="btn btn-primary">Find</button>
+                </form>
+            </div>
+            <div class="col-10">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped">
+                        <thead class="table-dark">
+                        <tr>
+                            <th>Name</th>
+                            <th>Type</th>
+                            <th>Price</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="car : ${actualCars}">
 
-                    <td th:text="${car.name}"/>
-                    <td th:text="${car.carType.name}"/>
-                    <td th:text="${car.carType.price}"/>
-                    <td>
-                        <a th:href="@{/rent/fillApplication(carId=${car.id})}"
-                           class="btn btn-info btn-sm">
-                            Rent
-                        </a>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+                            <td th:text="${car.name}"/>
+                            <td th:text="${car.carType.name}"/>
+                            <td th:text="${car.carType.price}"/>
+                            <td>
+                                <a th:href="@{/rent/fillApplication(carId=${car.id})}"
+                                   class="btn btn-info btn-sm">
+                                    Rent
+                                </a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div th:if="${pages.totalPages > 1}" class="d-flex align-items-center justify-content-center">
+                    <ul class="pagination">
+                        <li th:class="${pages.first} ? 'page-item disabled' : 'page-item'">
+                            <a th:if="${pages.hasPrevious()}" th:href="${'/rent?page=' + (pages.number - 1)}"
+                               class="page-link">&laquo;</a>
+                            <a th:if="${!pages.hasPrevious()}" href="#" class="page-link disabled">&laquo;</a>
+                        </li>
+
+                        <th:block th:each="page : ${#numbers.sequence(0, pages.totalPages - 1)}">
+                            <li class="" th:class="${page == pages.number} ? 'page-item active' : 'page-item'">
+                                <a th:href="${'/rent?page=' + page}"
+                                   class="page-link">
+                                    <span th:text="${page + 1}"></span>
+                                </a>
+                            </li>
+                        </th:block>
+
+                        <li th:class="${pages.last} ? 'page-item disabled' : 'page-item'">
+                            <a th:if="${pages.hasNext()}" th:href="${'/rent?page=' + (pages.number + 1)}"
+                               class="page-link">&raquo;</a>
+                            <a th:if="${!pages.hasNext()}" href="#" class="page-link disabled">&raquo;</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
+
     </main>
 </div>
 

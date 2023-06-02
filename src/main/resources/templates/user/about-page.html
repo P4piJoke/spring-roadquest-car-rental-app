@@ -32,18 +32,35 @@
             </ul>
         </div>
         <div class="col-md-3 text-end">
-            <a th:href="@{/profile}" class="btn btn-outline-primary me-2">
+            <a sec:authorize="!isAuthenticated()" th:href="@{/login}"
+               class="btn btn-outline-primary me-2">
+                Login
+            </a>
+            <a sec:authorize="!isAuthenticated()" th:href="@{/signup}" class="btn btn-primary">
+                Sign-up
+            </a>
+            <a sec:authorize="isAuthenticated()" th:href="@{/profile}" class="btn btn-outline-primary me-2">
                 Profile
             </a>
-            <a th:href="@{/logout}" class="btn btn-primary">
+            <a sec:authorize="isAuthenticated()" th:href="@{/logout}" class="btn btn-primary">
                 Logout
             </a>
-            <a></a>
         </div>
     </header>
 </div>
 <div class="container">
-<!--    cars -->
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <h1 class="mt-5">About Us</h1>
+            <p>Welcome to our car rental company! We offer a wide range of high-quality vehicles for rent, providing you with a convenient and reliable transportation solution for your needs.</p>
+            <p>At Car Rental Company, we understand the importance of having a comfortable and safe journey. Whether you're planning a family vacation, a business trip, or simply need a car for your daily commute, we have the perfect vehicle to suit your requirements.</p>
+            <p>Our fleet consists of modern and well-maintained cars, including sedans, SUVs, minivans, and luxury vehicles. Each vehicle is thoroughly inspected and serviced to ensure optimal performance and your satisfaction.</p>
+            <p>We strive to deliver excellent customer service and make the car rental process as smooth as possible. Our friendly and knowledgeable staff is always ready to assist you in choosing the right car and answering any questions you may have.</p>
+            <p>With our easy online reservation system, you can quickly browse available vehicles, select your desired dates, and make a reservation in just a few clicks. We offer flexible rental options, including daily, weekly, and monthly rates, to accommodate your specific needs.</p>
+            <p>Thank you for considering Car Rental Company for your transportation needs. We look forward to serving you and providing you with a memorable car rental experience.</p>
+            <p>Contact us today to book your next rental!</p>
+        </div>
+    </div>
 </div>
 
 <!-- Some data about company -->
@@ -77,7 +94,7 @@
         </div>
 
         <div class="text-center text-dark p-3" style="background-color: #e74f41;">
-            © 2020 Copyright:
+            © 2023 Copyright:
             <a class="text-dark" href="https://github.com/P4piJoke/spring-roadquest-car-rental-app" target="_blank">
                 RoadQuest inc.</a>
         </div>
