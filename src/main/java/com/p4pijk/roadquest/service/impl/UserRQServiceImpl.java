@@ -50,10 +50,9 @@ public class UserRQServiceImpl implements UserRQService {
     public User findActiveByLogin(String login) {
         User user;
         Optional<User> byLoginAndStatus = repository.findByLoginAndStatus(login, true);
-        if (byLoginAndStatus.isPresent()){
+        if (byLoginAndStatus.isPresent()) {
             user = byLoginAndStatus.get();
-        }
-        else {
+        } else {
             throw new RuntimeException("Can't find active user by login - " + login);
         }
         return user;

@@ -5,9 +5,12 @@
     <title>Car editor</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/style.css" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+          integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
-<div class="container">
+<div class="container vh-100">
     <header class="d-flex flex-wrap align-items-center
     justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
         <div class="col-md-3 mb-2 mb-md-0">
@@ -22,28 +25,65 @@
             </a>
         </div>
     </header>
+    <h1 class="text-center">Car editor</h1>
+    <div class="d-flex align-items-center justify-content-center">
+        <form action="#" th:action="@{/admin/saveCar}" th:object="${car}" method="post">
+            <input  type="hidden" th:field="*{id}">
+            <div class="form-group">
+                <label for="name" class="form-label">Name</label>
+                <input class="form-control" type="text" th:field="*{name}" id="name">
+                <div class="alert alert-warning" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+            </div>
+            <div class="form-group">
+                <label for="carTypes" class="form-label">Type</label>
+                <select th:field="*{carType.id}" class="form-control" id="carTypes">
+                    <option value="0" disabled selected>Select car type</option>
+                    <option th:each="type : ${types}" th:value="${type.id}" th:text="${type.name}"></option>
+                </select>
+                <div class="alert alert-warning" th:if="${#fields.hasErrors('carType')}" th:errors="*{carType}"></div>
+            </div>
+
+            <div class="text-center">
+                <button class="btn btn-primary btn-block mb-4 mt-4" type="submit">Save</button>
+            </div>
+        </form>
+    </div>
 </div>
-<div class="d-flex align-items-center justify-content-center">
-    <form action="#" th:action="@{/admin/saveCar}" th:object="${car}" method="post">
-        <input  type="hidden" th:field="*{id}">
-        <div class="form-group">
-            <label for="name" class="form-label">Name</label>
-            <input class="form-control" type="text" th:field="*{name}" id="name">
-            <div class="alert alert-warning" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
-        </div>
-        <div class="form-group">
-            <label for="carTypes" class="form-label">Type</label>
-            <select th:field="*{carType.id}" class="form-control" id="carTypes">
-                <option value="0" disabled selected>Select car type</option>
-                <option th:each="type : ${types}" th:value="${type.id}" th:text="${type.name}"></option>
-            </select>
-            <div class="alert alert-warning" th:if="${#fields.hasErrors('carType')}" th:errors="*{carType}"></div>
+<div>
+    <footer class="text-center text-white" style="background-color: #eb857c;">
+        <!-- Grid container -->
+        <div class="container pt-4">
+            <!-- Section: Social media -->
+            <section class="mb-4">
+                <!-- Linkedin -->
+                <a
+                        class="btn btn-link btn-floating btn-lg text-dark m-1"
+                        target="_blank"
+                        href="https://www.linkedin.com/in/danylo-papizhuk-3667b017b/"
+                        role="button"
+                        data-mdb-ripple-color="dark"
+                ><i class="fab fa-linkedin"></i
+                ></a>
+                <!-- Github -->
+                <a
+                        class="btn btn-link btn-floating btn-lg text-dark m-1"
+                        target="_blank"
+                        href="https://github.com/P4piJoke"
+                        role="button"
+                        data-mdb-ripple-color="dark"
+                ><i class="fab fa-github"></i
+                ></a>
+            </section>
+            <!-- Section: Social media -->
         </div>
 
-        <div class="text-center">
-            <button class="btn btn-primary btn-block mb-4 mt-4" type="submit">Save</button>
+        <div class="text-center text-dark p-3" style="background-color: #e74f41;">
+            © 2023 Copyright:
+            <a class="text-dark" href="https://github.com/P4piJoke/spring-roadquest-car-rental-app" target="_blank">
+                RoadQuest inc.</a>
         </div>
-    </form>
+        <!-- Copyright -->
+    </footer>
 </div>
 </body>
 </html>

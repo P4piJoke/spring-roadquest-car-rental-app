@@ -10,5 +10,6 @@ public interface UserRQService extends RoadQuestService<User> {
     User findActiveByLogin(String login);
 
     List<User> findByRole(Role role);
+
     User findByLogin(String login);
 }

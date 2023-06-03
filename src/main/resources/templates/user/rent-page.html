@@ -93,14 +93,14 @@
                 <div th:if="${pages.totalPages > 1}" class="d-flex align-items-center justify-content-center">
                     <ul class="pagination">
                         <li th:class="${pages.first} ? 'page-item disabled' : 'page-item'">
-                            <a th:if="${pages.hasPrevious()}" th:href="${'/rent?page=' + (pages.number - 1)}"
+                            <a th:if="${pages.hasPrevious()}" th:href="${'/rent?' +filteredUrl+ 'page=' + (pages.number - 1)}"
                                class="page-link">&laquo;</a>
                             <a th:if="${!pages.hasPrevious()}" href="#" class="page-link disabled">&laquo;</a>
                         </li>
 
                         <th:block th:each="page : ${#numbers.sequence(0, pages.totalPages - 1)}">
                             <li class="" th:class="${page == pages.number} ? 'page-item active' : 'page-item'">
-                                <a th:href="${'/rent?page=' + page}"
+                                <a th:href="${'/rent?' +filteredUrl+ 'page=' + page}"
                                    class="page-link">
                                     <span th:text="${page + 1}"></span>
                                 </a>
@@ -108,7 +108,7 @@
                         </th:block>
 
                         <li th:class="${pages.last} ? 'page-item disabled' : 'page-item'">
-                            <a th:if="${pages.hasNext()}" th:href="${'/rent?page=' + (pages.number + 1)}"
+                            <a th:if="${pages.hasNext()}" th:href="${'/rent?' +filteredUrl+ 'page=' + (pages.number + 1)}"
                                class="page-link">&raquo;</a>
                             <a th:if="${!pages.hasNext()}" href="#" class="page-link disabled">&raquo;</a>
                         </li>

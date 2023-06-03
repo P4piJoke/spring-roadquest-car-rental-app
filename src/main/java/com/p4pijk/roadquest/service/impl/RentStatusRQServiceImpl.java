@@ -24,10 +24,9 @@ public class RentStatusRQServiceImpl implements RentStatusRQService {
     public RentStatus findById(int id) {
         RentStatus status;
         Optional<RentStatus> byId = repository.findById(id);
-        if (byId.isPresent()){
+        if (byId.isPresent()) {
             status = byId.get();
-        }
-        else {
+        } else {
             throw new RuntimeException("Can't find status by id - " + id);
         }
         return status;

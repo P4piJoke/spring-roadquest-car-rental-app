@@ -7,8 +7,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface ApplicationRepository extends JpaRepository<Application,Integer> {
+public interface ApplicationRepository extends JpaRepository<Application, Integer> {
 
     List<Application> findAllByRentStatus(RentStatus status);
+
     List<Application> findByCustomer(User user);
 }

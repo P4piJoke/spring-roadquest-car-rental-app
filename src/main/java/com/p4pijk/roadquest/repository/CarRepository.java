@@ -13,7 +13,10 @@ import java.util.List;
 public interface CarRepository extends JpaRepository<Car, Integer> {
 
     List<Car> findAllByStatus(boolean status);
+
     Page<Car> findAllByStatus(boolean status, Pageable pageable);
+
     List<Car> findAllByCarTypeIn(List<CarType> filters);
+
     Page<Car> findAllByCarTypeIn(List<CarType> filters, Pageable pageable);
 }

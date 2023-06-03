@@ -54,7 +54,7 @@ public class RentController {
             return RQLiterals.FILL_APPLICATION_PAGE.value();
         }
 
-        if (passport != null){
+        if (passport != null) {
             User user = userService.findById(applicationModel.getCustomer().getId());
             user.setPassport(Integer.valueOf(passport));
             userService.save(user);

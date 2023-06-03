@@ -4,6 +4,7 @@ import com.p4pijk.roadquest.entity.user.Role;
 import com.p4pijk.roadquest.entity.user.User;
 import com.p4pijk.roadquest.model.UserModel;
 import com.p4pijk.roadquest.service.impl.UserRQServiceImpl;
+import com.p4pijk.roadquest.util.RQLiterals;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -24,14 +25,14 @@ public class SignUpController {
     @GetMapping("/signup")
     public String createNewUser(UserModel userModel, Model model) {
         model.addAttribute("userModel", userModel);
-        return "user/signup";
+        return RQLiterals.SIGNUP_PAGE.value();
     }
 
     @PostMapping("/signup")
     public String createNewUser(@Valid @ModelAttribute("userModel") UserModel userModel,
                                 BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return "user/signup";
+            return RQLiterals.SIGNUP_PAGE.value();
         }
         service.save(
                 User.builder()
@@ -45,7 +46,7 @@ public class SignUpController {
                         .status(true)
                         .build()
         );
-        return "redirect:/";
+        return RQLiterals.REDIRECT_SIGNUP_PAGE.value();
     }
 
 }
