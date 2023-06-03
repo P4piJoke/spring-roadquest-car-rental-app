@@ -4,10 +4,8 @@ package com.p4pijk.roadquest.model;
 import com.p4pijk.roadquest.entity.car.Car;
 import com.p4pijk.roadquest.entity.order.RentStatus;
 import com.p4pijk.roadquest.entity.user.User;
-import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 

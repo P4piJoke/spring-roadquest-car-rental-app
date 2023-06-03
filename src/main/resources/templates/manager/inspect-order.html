@@ -5,9 +5,12 @@
     <title>Car editor</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/style.css" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+          integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
-<div class="container">
+<div class="container vh-100">
     <header class="d-flex flex-wrap align-items-center
     justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
         <div class="col-md-3 mb-2 mb-md-0">
@@ -22,42 +25,78 @@
             </a>
         </div>
     </header>
+    <div class="d-flex align-items-center justify-content-center">
+        <form action="#" th:action="@{/manager/declineApplication}" th:object="${order}" method="post">
+            <input type="hidden" th:field="*{id}">
+            <div class="form-group">
+                <label for="client" class="form-label">Renter</label>
+                <p class="form-control" type="text" th:text="*{customer.lastName + ' ' + customer.firstName}"
+                   id="client"
+                   readonly></p>
+            </div>
+            <div class="form-group w-auto">
+                <label for="chosen" class="form-label">Car</label>
+                <p class="form-control" type="text" th:text="*{car.name+' : '+ car.carType.name}" id="chosen"
+                   readonly></p>
+            </div>
+            <div class="form-group">
+                <label for="sDate" class="form-label">From</label>
+                <input type="text" class="form-control" th:field="*{startDate}" id="sDate" readonly>
+            </div>
+            <div class="form-group">
+                <label for="eDate" class="form-label">To</label>
+                <input type="text" class="form-control" th:field="*{endDate}" id="eDate" readonly>
+            </div>
+            <div class="form-group">
+                <label for="bill" class="form-label">Bill</label>
+                <input type="text" th:field="*{price}" name="price" id="bill" class="form-control" readonly>
+            </div>
+            <div class="form-group">
+                <label for="descr" class="form-label">Description</label>
+                <input type="text" class="form-control" th:field="*{description}" id="descr">
+            </div>
+
+            <div class="text-center">
+                <button class="btn btn-primary btn-block mb-4 mt-4" type="submit">Decline</button>
+            </div>
+        </form>
+    </div>
 </div>
-<div class="d-flex align-items-center justify-content-center">
-    <form action="#" th:action="@{/manager/declineApplication}" th:object="${order}" method="post">
-        <input type="hidden" th:field="*{id}">
-        <div class="form-group">
-            <label for="client" class="form-label">Renter</label>
-            <p class="form-control" type="text" th:text="*{customer.lastName + ' ' + customer.firstName}"
-               id="client"
-               readonly></p>
-        </div>
-        <div class="form-group w-auto">
-            <label for="chosen" class="form-label">Car</label>
-            <p class="form-control" type="text" th:text="*{car.name+' : '+ car.carType.name}" id="chosen"
-               readonly></p>
-        </div>
-        <div class="form-group">
-            <label for="sDate" class="form-label">From</label>
-            <input type="text" class="form-control" th:field="*{startDate}" id="sDate" readonly>
-        </div>
-        <div class="form-group">
-            <label for="eDate" class="form-label">To</label>
-            <input type="text" class="form-control" th:field="*{endDate}" id="eDate" readonly>
-        </div>
-        <div class="form-group">
-            <label for="bill" class="form-label">Bill</label>
-            <input type="text" th:field="*{price}" name="price" id="bill" class="form-control" readonly>
-        </div>
-        <div class="form-group">
-            <label for="descr" class="form-label">Description</label>
-            <input type="text" class="form-control" th:field="*{description}" id="descr">
+<div>
+    <footer class="text-center text-white" style="background-color: #eb857c;">
+        <!-- Grid container -->
+        <div class="container pt-4">
+            <!-- Section: Social media -->
+            <section class="mb-4">
+                <!-- Linkedin -->
+                <a
+                        class="btn btn-link btn-floating btn-lg text-dark m-1"
+                        target="_blank"
+                        href="https://www.linkedin.com/in/danylo-papizhuk-3667b017b/"
+                        role="button"
+                        data-mdb-ripple-color="dark"
+                ><i class="fab fa-linkedin"></i
+                ></a>
+                <!-- Github -->
+                <a
+                        class="btn btn-link btn-floating btn-lg text-dark m-1"
+                        target="_blank"
+                        href="https://github.com/P4piJoke"
+                        role="button"
+                        data-mdb-ripple-color="dark"
+                ><i class="fab fa-github"></i
+                ></a>
+            </section>
+            <!-- Section: Social media -->
         </div>
 
-        <div class="text-center">
-            <button class="btn btn-primary btn-block mb-4 mt-4" type="submit">Decline</button>
+        <div class="text-center text-dark p-3" style="background-color: #e74f41;">
+            © 2023 Copyright:
+            <a class="text-dark" href="https://github.com/P4piJoke/spring-roadquest-car-rental-app" target="_blank">
+                RoadQuest inc.</a>
         </div>
-    </form>
+        <!-- Copyright -->
+    </footer>
 </div>
 </body>
 </html>

@@ -10,7 +10,10 @@ import java.util.List;
 public interface CarRQService extends RoadQuestService<Car> {
 
     List<Car> findAllActiveCars();
+
     Page<Car> findAllActiveCars(Pageable pageable);
+
     List<Car> findAllByCarTypeIn(List<CarType> filters);
+
     Page<Car> findAllByCarTypeIn(List<CarType> filters, Pageable pageable);
 }

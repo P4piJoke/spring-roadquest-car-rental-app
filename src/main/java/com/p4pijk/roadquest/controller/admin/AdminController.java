@@ -39,7 +39,7 @@ public class AdminController {
         model.addAttribute("cars", carService.findAll())
                 .addAttribute("users", userService.findByRole(BASIC))
                 .addAttribute("managers", userService.findByRole(MANAGER))
-                .addAttribute("types",carTypeService.findAll());
+                .addAttribute("types", carTypeService.findAll());
         return RQLiterals.ADMIN_PAGE.value();
     }
 
@@ -132,7 +132,7 @@ public class AdminController {
     }
 
     @GetMapping("/changePrice")
-    public String changeCarTypePrice(@RequestParam("typeId") int id, @RequestParam("price") int price){
+    public String changeCarTypePrice(@RequestParam("typeId") int id, @RequestParam("price") int price) {
         CarType carType = carTypeService.findById(id);
         carTypeService.save(CarType.builder()
                 .id(carType.getId())

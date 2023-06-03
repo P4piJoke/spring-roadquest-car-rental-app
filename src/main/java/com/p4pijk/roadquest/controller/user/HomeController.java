@@ -2,7 +2,6 @@ package com.p4pijk.roadquest.controller.user;
 
 import com.p4pijk.roadquest.entity.car.Car;
 import com.p4pijk.roadquest.entity.car.CarType;
-import com.p4pijk.roadquest.entity.order.RentStatus;
 import com.p4pijk.roadquest.entity.user.User;
 import com.p4pijk.roadquest.service.ApplicationRQService;
 import com.p4pijk.roadquest.service.CarRQService;
@@ -36,6 +35,7 @@ public class HomeController {
     private final ApplicationRQService applicationService;
     private final CarTypeRQService carTypeService;
     private List<CarType> selectedFilters;
+    private String filteredUrl = "";
 
     @GetMapping("/profile")
     public String profile(@AuthenticationPrincipal UserDetails userDetails,
@@ -59,18 +59,24 @@ public class HomeController {
                                List<CarType> filters,
                                @RequestParam(required = false, defaultValue = "0")
                                int page,
+                               @RequestParam(required = false, defaultValue = "10")
+                               int size,
                                Model model, HttpServletRequest request) {
-        Pageable pageable = PageRequest.of(page, 1);
+
+        Pageable pageable = PageRequest.of(page, size);
         Page<Car> cars;
         Page<Car> pages;
         List<CarType> carTypes;
+
         if (filters != null) {
+            if (request.getQueryString().matches("(?:filters=\\d+&?)+")) {
+                setFilteredUrl(request.getQueryString() + "&");
+            }
             setSelectedFilters(filters);
-//            carTypes = filters;
             cars = carService.findAllByCarTypeIn(filters, pageable);
             pages = carService.findAllByCarTypeIn(filters, pageable);
         } else {
-//            carTypes = carTypeService.findAll();
+            setFilteredUrl("");
             setSelectedFilters(new ArrayList<>());
             cars = carService.findAllActiveCars(pageable);
             pages = carService.findAllActiveCars(pageable);
@@ -80,7 +86,7 @@ public class HomeController {
         model.addAttribute("pages", pages);
         model.addAttribute("filters", carTypeService.findAll());
         model.addAttribute("selectedFilters", getSelectedFilters());
-        model.addAttribute("httpServletRequest", request);
+        model.addAttribute("filteredUrl", getFilteredUrl());
         return RQLiterals.RENT_PAGE.value();
     }
 
@@ -102,5 +108,13 @@ public class HomeController {
 
     public void setSelectedFilters(List<CarType> selectedFilters) {
         this.selectedFilters = selectedFilters;
+    }
+
+    public String getFilteredUrl() {
+        return filteredUrl;
+    }
+
+    public void setFilteredUrl(String filteredUrl) {
+        this.filteredUrl = filteredUrl;
     }
 }

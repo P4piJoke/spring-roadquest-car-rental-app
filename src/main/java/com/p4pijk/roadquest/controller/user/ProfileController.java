@@ -5,7 +5,6 @@ import com.p4pijk.roadquest.entity.order.Application;
 import com.p4pijk.roadquest.entity.order.RentStatus;
 import com.p4pijk.roadquest.entity.user.User;
 import com.p4pijk.roadquest.service.ApplicationRQService;
-import com.p4pijk.roadquest.service.CarRQService;
 import com.p4pijk.roadquest.service.impl.CarRQServiceImpl;
 import com.p4pijk.roadquest.service.impl.UserRQServiceImpl;
 import com.p4pijk.roadquest.util.RQLiterals;
@@ -21,15 +20,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequiredArgsConstructor
 public class ProfileController {
 
-    private static final RentStatus PAID = new RentStatus(3,"Paid");
+    private static final RentStatus PAID = new RentStatus(3, "Paid");
 
-    private static final RentStatus COMPLETED = new RentStatus(4,"Completed");
+    private static final RentStatus COMPLETED = new RentStatus(4, "Completed");
     private final UserRQServiceImpl userService;
     private final ApplicationRQService applicationService;
     private final CarRQServiceImpl carService;
 
     @PostMapping("/cashIn")
-    public String cashIn(@RequestParam("userId") int id, @RequestParam("cash") int cash){
+    public String cashIn(@RequestParam("userId") int id, @RequestParam("cash") int cash) {
         User byId = userService.findById(id);
         byId.setBill(byId.getBill() + cash);
         userService.save(byId);
@@ -38,7 +37,7 @@ public class ProfileController {
     }
 
     @GetMapping("/payApplication")
-    public String payApplication(@RequestParam("orderId") int id){
+    public String payApplication(@RequestParam("orderId") int id) {
         Application application = applicationService.findById(id);
         User customer = application.getCustomer();
         customer.setBill(customer.getBill() - application.getPrice());
@@ -51,7 +50,7 @@ public class ProfileController {
     }
 
     @GetMapping("/returnCar")
-    public String returnCar(@RequestParam("orderId") int id){
+    public String returnCar(@RequestParam("orderId") int id) {
         Application application = applicationService.findById(id);
         Car car = application.getCar();
 
