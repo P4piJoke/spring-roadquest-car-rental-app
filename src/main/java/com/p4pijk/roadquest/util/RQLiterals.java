@@ -24,7 +24,8 @@ public enum RQLiterals {
 
     //    LOGIN PAGE
     REDIRECT_LOGOUT_PAGE("redirect:/index.html"),
-    REDIRECT_SIGNUP_PAGE("redirect:/"),
+    REDIRECT_MAIN_PAGE("redirect:/"),
+    REDIRECT_LOGIN_PAGE("redirect:/login"),
     LOGIN_PAGE("user/login"),
     SIGNUP_PAGE("user/signup");
 

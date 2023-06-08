@@ -46,7 +46,7 @@ public class SignUpController {
                         .status(true)
                         .build()
         );
-        return RQLiterals.REDIRECT_SIGNUP_PAGE.value();
+        return RQLiterals.REDIRECT_LOGIN_PAGE.value();
     }
 
 }

@@ -23,6 +23,7 @@ public class UserSecurityConfig {
             "/img/**",
             "/signup",
             "/",
+            "/sendMail",
             "/about",
             "index.html"
     };
