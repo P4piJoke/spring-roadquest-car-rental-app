@@ -254,12 +254,11 @@
                     <div class="contact__title title">
                         Contacts
                     </div>
-                    <form action="https://formsubmit.co/danil.papizhuk02@gmail.com" method="post" class="contact__form">
+                    <form th:action="@{/sendMail}" method="post" class="contact__form">
                         <div class="d-flex flex-column">
                             <label>Ім'я</label>
                             <input type="text" name="name" id="clientname" placeholder="Name">
                         </div>
-                        <input type="hidden" name="_next" th:value="@{/}">
                         <div class="d-flex flex-column">
                             <label>Пошта</label>
                             <input type="text" name="email" required id="clientemail" placeholder="Email">

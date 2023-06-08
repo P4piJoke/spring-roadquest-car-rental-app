@@ -6,6 +6,7 @@ import com.p4pijk.roadquest.entity.user.User;
 import com.p4pijk.roadquest.service.ApplicationRQService;
 import com.p4pijk.roadquest.service.CarRQService;
 import com.p4pijk.roadquest.service.CarTypeRQService;
+import com.p4pijk.roadquest.service.impl.SmtpService;
 import com.p4pijk.roadquest.service.impl.UserRQServiceImpl;
 import com.p4pijk.roadquest.util.RQLiterals;
 import jakarta.servlet.http.HttpServletRequest;
@@ -20,6 +21,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
@@ -34,6 +36,7 @@ public class HomeController {
     private final CarRQService carService;
     private final ApplicationRQService applicationService;
     private final CarTypeRQService carTypeService;
+    private final SmtpService smtpService;
     private List<CarType> selectedFilters;
     private String filteredUrl = "";
 
@@ -93,6 +96,15 @@ public class HomeController {
     @GetMapping("/about")
     public String showAboutPage(Model model) {
         return RQLiterals.ABOUT_PAGE.value();
+    }
+
+    @PostMapping("/sendMail")
+    public String sendMail(@RequestParam(required = false) String name,
+                           @RequestParam String email,
+                           @RequestParam(required = false) String message) {
+
+        smtpService.sendEmail(email,name,message);
+        return RQLiterals.REDIRECT_MAIN_PAGE.value();
     }
 
     private void initUserCabinet(UserDetails userDetails, Model model) {
